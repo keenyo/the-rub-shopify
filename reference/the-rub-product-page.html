@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>The Rub, 6 oz Pouch &mdash; The Rub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kraft-bg:#EDE1C8;
+    --kraft-card:#F7F1E1;
+    --kraft-deep:#B98D53;
+    --tape:#4577A8;
+    --tape-dark:#2A4D73;
+    --steel:#9A9C97;
+    --steel-dark:#2E2F2A;
+    --ink:#201D16;
+    --chili:#A6432B;
+    --acid:#DEE47C;
+    --acid-ink:#3A3D1E;
+    --paper-line: rgba(32,29,22,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--kraft-bg);
+    color:var(--ink);
+    font-family:'Syne', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1100px; margin:0 auto; padding:0 32px;}
+  a{color:inherit;}
+
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-weight:700;
+    margin:0;
+  }
+  .mono{font-family:'Space Mono', monospace; text-transform:uppercase; letter-spacing:0.06em;}
+
+  .tape{
+    position:relative;
+    display:inline-block;
+    background:var(--tape);
+    color:#152233;
+    font-family:'Permanent Marker', cursive;
+    text-transform:none;
+    font-size:16px;
+    line-height:1.4;
+    padding:11px 22px;
+    transform:rotate(-2deg);
+    clip-path:polygon(0% 0%, 100% 0%, 98.4% 25.0%, 98.7% 50.0%, 99.8% 75.0%, 100% 100%, 0% 100%, 1.4% 75.0%, 1.5% 50.0%, 1.8% 25.0%);
+    box-shadow:0 4px 10px rgba(0,0,0,0.22);
+  }
+  .tape.alt{ background:var(--kraft-deep); color:#2b1f0f; transform:rotate(1.6deg); }
+  .tape.dark{ background:var(--ink); color:#EDE1C8; transform:rotate(-1deg); }
+
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 32px;
+    max-width:1100px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:22px;
+    text-transform:uppercase; letter-spacing:0.02em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo .dot{width:8px; height:8px; border-radius:50%; background:var(--chili); display:inline-block;}
+  .navlinks{display:flex; gap:34px; font-family:'Space Mono',monospace; font-size:13px; text-transform:uppercase; letter-spacing:0.05em;}
+  .navlinks a{text-decoration:none; border-bottom:1px solid transparent;}
+  .navlinks a:hover{border-color:var(--ink);}
+  .crumb{font-family:'Space Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:var(--tape-dark); padding:18px 32px 0; max-width:1100px; margin:0 auto;}
+  .crumb a{text-decoration:none; border-bottom:1px solid var(--paper-line);}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    font-family:'Space Mono', monospace; text-transform:uppercase; letter-spacing:0.05em;
+    font-size:14px; font-weight:700;
+    background:var(--ink); color:var(--kraft-bg);
+    padding:16px 26px; text-decoration:none; border:none; cursor:pointer;
+  }
+  .btn:hover{background:var(--tape-dark);}
+  .btn.ghost{background:transparent; color:var(--ink); border:1.5px solid var(--ink);}
+  .btn.block{width:100%;}
+
+  /* ---- product hero ---- */
+  .product-hero{
+    display:grid; grid-template-columns:0.95fr 1.05fr; gap:60px;
+    padding:26px 32px 80px; max-width:1100px; margin:0 auto;
+  }
+  .gallery-main{
+    aspect-ratio:3/4; background:linear-gradient(180deg,#D9C69C,#C9AF7D);
+    border:1px solid rgba(0,0,0,0.15);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;
+    position:relative;
+  }
+  .gallery-main .pouch-logo{font-family:'Space Grotesk'; font-weight:700; text-transform:uppercase; font-size:34px;}
+  .gallery-main .pouch-sub{font-family:'Space Mono'; font-size:13px; text-transform:uppercase; letter-spacing:0.08em; color:#5b4526;}
+  .gallery-main .tape{position:absolute; top:18px; right:18px; font-size:13px; padding:8px 16px;}
+  .gallery-thumbs{display:flex; gap:14px; margin-top:16px;}
+  .thumb{
+    width:70px; height:70px; background:var(--steel); border:2px solid transparent; cursor:pointer;
+  }
+  .thumb.active{border-color:var(--ink);}
+
+  .kicker{font-family:'Space Mono'; font-size:13px; color:var(--tape-dark); margin-bottom:10px; display:block;}
+  .product-hero h1{font-size:38px; margin:0 0 14px; line-height:1.1;}
+  .stars{color:var(--chili); font-size:15px; letter-spacing:2px; margin-bottom:14px;}
+  .stars span{font-family:'Space Mono'; color:var(--tape-dark); letter-spacing:0; margin-left:8px; font-size:13px;}
+  .product-hero > div > p.desc{font-size:16px; line-height:1.7; color:#3a3324; max-width:52ch; margin:0 0 26px;}
+  .feat-list{list-style:none; padding:0; margin:0 0 30px; font-family:'Space Mono'; font-size:13px; text-transform:uppercase; display:flex; flex-direction:column; gap:10px;}
+  .feat-list li:before{content:"— "; color:var(--chili);}
+  .price-row{display:flex; align-items:baseline; gap:14px; margin:0 0 22px;}
+  .price{font-family:'Space Grotesk'; font-weight:700; font-size:32px;}
+  .was{font-family:'Space Mono'; font-size:14px; color:#8a7c5e; text-decoration:line-through;}
+  .field-label{font-family:'Space Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:var(--tape-dark); margin-bottom:8px; display:block;}
+  .sizes{display:flex; gap:10px; margin-bottom:22px;}
+  .size-pill{
+    font-family:'Space Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;
+    border:1.5px solid var(--ink); padding:9px 16px; cursor:pointer; background:transparent;
+  }
+  .size-pill.active{background:var(--ink); color:var(--kraft-bg);}
+  .buy-row{display:flex; gap:14px; margin-bottom:14px;}
+  .qty{display:flex; align-items:center; border:1.5px solid var(--ink);}
+  .qty button{background:none; border:none; width:40px; height:52px; font-size:18px; cursor:pointer; font-family:'Space Mono';}
+  .qty span{width:34px; text-align:center; font-family:'Space Mono'; font-size:14px;}
+  .buy-row .btn{flex:1;}
+  .reassure{font-family:'Space Mono'; font-size:11px; text-transform:uppercase; letter-spacing:0.04em; color:var(--tape-dark); margin-top:4px;}
+
+  /* ---- ingredients ---- */
+  .ingredients-section{background:var(--kraft-card); border-top:1px solid var(--paper-line); border-bottom:1px solid var(--paper-line); padding:70px 0;}
+  .ing-grid2{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start;}
+  .ing-grid2 .panel-label{font-size:22px; margin:0 0 20px; padding-bottom:14px; border-bottom:2px solid var(--ink);}
+  .ing-mono-list{font-family:'Space Mono', monospace; text-transform:uppercase; font-size:16px; line-height:2.1; letter-spacing:0.02em; max-width:36ch;}
+  .ing-mono-list b{color:var(--chili);}
+  .ing-note{font-size:16px; line-height:1.75; color:#3a3324; max-width:44ch;}
+
+  /* ---- perfect for band ---- */
+  .perfect-for{padding:70px 0 0;}
+  .perfect-for-stage{position:relative;}
+  .marquee-outer{overflow:hidden; background:var(--steel-dark); padding:22px 0; width:100%;}
+  .marquee-track{display:flex; align-items:center; gap:26px; width:max-content; animation:marquee 24s linear infinite; white-space:nowrap;}
+  .marquee-outer:hover .marquee-track{animation-play-state:paused;}
+  .marquee-track span.item{font-family:'Space Grotesk'; font-weight:700; text-transform:uppercase; font-size:22px; letter-spacing:0.01em; color:var(--kraft-bg);}
+  .marquee-track span.dot{color:var(--chili); font-size:14px;}
+  .perfect-tape{position:absolute; top:-14px; left:40px; font-size:14px; padding:9px 18px; transform:rotate(-3deg); z-index:5;}
+  @keyframes marquee{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  /* ---- recipes ---- */
+  .recipes-section{padding:90px 0;}
+  .section-head{margin-bottom:34px;}
+  .section-head h2{font-size:30px; margin:14px 0 0;}
+  .recipes-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .recipe-card{background:var(--kraft-card); border:1px solid var(--paper-line);}
+  .recipe-img{aspect-ratio:4/3; background:var(--steel); position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:14px;}
+  .recipe-body{padding:20px 18px 26px;}
+  .recipe-body h3{font-size:18px; margin:0 0 8px;}
+  .recipe-body p{font-size:14px; color:#5c5340; margin:0 0 14px; line-height:1.55;}
+  .recipe-link{font-family:'Space Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.04em; text-decoration:none; border-bottom:1px solid var(--ink);}
+
+  /* ---- footer ---- */
+  footer{background:var(--steel-dark); color:var(--kraft-bg); padding:56px 0 34px;}
+  .foot-top{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:40px; flex-wrap:wrap; gap:30px;}
+  .foot-logo{font-family:'Space Grotesk'; font-weight:700; font-size:24px; text-transform:uppercase;}
+  .foot-links{display:flex; gap:60px; flex-wrap:wrap;}
+  .foot-col h4{font-family:'Space Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:#B7B6AE; margin:0 0 14px;}
+  .foot-col a{display:block; font-size:14px; text-decoration:none; color:var(--kraft-bg); margin-bottom:8px; opacity:0.9;}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,0.15); padding-top:22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
+  .foot-bottom .sign{font-family:'Permanent Marker'; font-size:20px; color:var(--kraft-bg);}
+  .foot-bottom .copy{font-family:'Space Mono'; font-size:11px; color:#8f8e86; text-transform:uppercase;}
+
+  @media (max-width:860px){
+    .product-hero{grid-template-columns:1fr;}
+    .ing-grid2{grid-template-columns:1fr;}
+    .recipes-grid{grid-template-columns:1fr;}
+    .foot-top{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span class="dot"></span>The rub</div>
+  <div class="navlinks">
+    <a href="the-rub-homepage.html#shop">Shop</a>
+    <a href="the-rub-homepage.html#recipe-collection">Recipes</a>
+    <a href="the-rub-homepage.html#story">Our story</a>
+  </div>
+</nav>
+
+{% comment %}
+  This section must be added to the PRODUCT template (not a generic Page) —
+  it needs Shopify's `product` object, which only exists there. Once added,
+  it works for whichever product that template is assigned to.
+{% endcomment %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+
+<div class="crumb"><a href="/collections/all">Shop</a> / {{ product.type | default: "Original blend" }}</div>
+
+<section class="product-hero">
+  <div>
+    <div class="gallery-main">
+      <span class="tape">Bestseller</span>
+      {% if product.featured_image %}
+        <img id="MainProductImage" src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.featured_image.alt | escape }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+      {% else %}
+        <div class="pouch-logo">{{ product.title | default: "The rub" }}</div>
+        <div class="pouch-sub">{{ current_variant.title }}</div>
+      {% endif %}
+    </div>
+    {% if product.images.size > 1 %}
+    <div class="gallery-thumbs">
+      {% for image in product.images limit: 4 %}
+        <div class="thumb{% if forloop.first %} active{% endif %}" style="background-image:url('{{ image | image_url: width: 200 }}'); background-size:cover;" data-full="{{ image | image_url: width: 900 }}"></div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div>
+    <span class="kicker mono">{{ product.type | default: "Original blend" }}</span>
+    <h1>{{ product.title }}</h1>
+    <div class="stars">&starf;&starf;&starf;&starf;&starf; <span>312 reviews</span></div>
+    <p class="desc">{{ product.description | strip_html | truncatewords: 30 }}</p>
+    <ul class="feat-list">
+      <li>No MSG, no anti-caking agents</li>
+      <li>Small-batch, hand mixed</li>
+      <li>Goes on everything, we've checked</li>
+    </ul>
+
+    {% form 'product', product, id: 'ProductForm' %}
+      <input type="hidden" name="id" id="ProductVariantId" value="{{ current_variant.id }}">
+
+      <div class="price-row">
+        <span class="price" id="ProductPrice">{{ current_variant.price | money }}</span>
+        {% if current_variant.compare_at_price > current_variant.price %}
+          <span class="was" id="ProductCompareAt">{{ current_variant.compare_at_price | money }}</span>
+        {% else %}
+          <span class="was" id="ProductCompareAt" style="display:none;"></span>
+        {% endif %}
+      </div>
+
+      {% if product.variants.size > 1 %}
+      <span class="field-label">Size</span>
+      <div class="sizes">
+        {% for variant in product.variants %}
+          <span class="size-pill{% if variant.id == current_variant.id %} active{% endif %}"
+                data-variant-id="{{ variant.id }}"
+                data-price="{{ variant.price }}"
+                data-compare="{{ variant.compare_at_price }}"
+                data-available="{{ variant.available }}">{{ variant.title }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <span class="field-label">Quantity</span>
+      <div class="buy-row">
+        <div class="qty">
+          <button type="button" aria-label="Decrease quantity">&minus;</button>
+          <span id="QtyDisplay">1</span>
+          <input type="hidden" name="quantity" id="ProductQuantity" value="1">
+          <button type="button" aria-label="Increase quantity">+</button>
+        </div>
+        <button type="submit" class="btn" id="AddToCartBtn"{% unless current_variant.available %} disabled{% endunless %}>
+          {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
+        </button>
+      </div>
+    {% endform %}
+    <p class="reassure">Ships in 1&ndash;2 business days &middot; free shipping over $35</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  function formatMoney(cents){
+    return '$' + (cents / 100).toFixed(2).replace(/\.00$/, '');
+  }
+  var variantInput = document.getElementById('ProductVariantId');
+  var qtyInput = document.getElementById('ProductQuantity');
+  var qtyDisplay = document.getElementById('QtyDisplay');
+  var priceEl = document.getElementById('ProductPrice');
+  var wasEl = document.getElementById('ProductCompareAt');
+  var addBtn = document.getElementById('AddToCartBtn');
+  var qty = 1;
+
+  document.querySelectorAll('.size-pill').forEach(function(pill){
+    pill.addEventListener('click', function(){
+      document.querySelectorAll('.size-pill').forEach(function(p){ p.classList.remove('active'); });
+      pill.classList.add('active');
+      variantInput.value = pill.getAttribute('data-variant-id');
+
+      var price = parseInt(pill.getAttribute('data-price'), 10);
+      var compare = parseInt(pill.getAttribute('data-compare') || '0', 10);
+      priceEl.textContent = formatMoney(price);
+      if(compare > price){
+        wasEl.textContent = formatMoney(compare);
+        wasEl.style.display = '';
+      } else {
+        wasEl.style.display = 'none';
+      }
+
+      var available = pill.getAttribute('data-available') === 'true';
+      addBtn.disabled = !available;
+      addBtn.textContent = available ? 'Add to cart' : 'Sold out';
+    });
+  });
+
+  document.querySelectorAll('.qty button').forEach(function(btn, i){
+    btn.addEventListener('click', function(){
+      qty = i === 0 ? Math.max(1, qty - 1) : qty + 1;
+      qtyDisplay.textContent = qty;
+      qtyInput.value = qty;
+    });
+  });
+
+  document.querySelectorAll('.thumb[data-full]').forEach(function(t){
+    t.addEventListener('click', function(){
+      document.querySelectorAll('.thumb').forEach(function(x){ x.classList.remove('active'); });
+      t.classList.add('active');
+      var mainImg = document.getElementById('MainProductImage');
+      if(mainImg) mainImg.src = t.getAttribute('data-full');
+    });
+  });
+})();
+</script>
+
+<section class="ingredients-section">
+  <div class="wrap">
+    <div class="ing-grid2">
+      <div>
+        <h2 class="panel-label">Ingredients</h2>
+        <p class="ing-mono-list">
+          Cayenne, kosher salt, black pepper, smoked paprika, garlic powder, onion powder, brown sugar, chili flake, <b>and a little stubbornness.</b>
+        </p>
+      </div>
+      <div style="align-self:center;">
+        <p class="ing-note">No fillers. No anti-caking sand. Just the stuff that was already in the tub the first time someone tasted it and said &ldquo;wait, what is that.&rdquo;</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="perfect-for">
+  <div class="perfect-for-stage">
+    <span class="tape perfect-tape">Perfect for</span>
+    <div class="marquee-outer">
+      <div class="marquee-track">
+        <span class="item">Wings</span><span class="dot">&bull;</span>
+        <span class="item">Ribs</span><span class="dot">&bull;</span>
+        <span class="item">Shrimp</span><span class="dot">&bull;</span>
+        <span class="item">Chicken thighs</span><span class="dot">&bull;</span>
+        <span class="item">Steak</span><span class="dot">&bull;</span>
+        <span class="item">Potatoes</span><span class="dot">&bull;</span>
+        <span class="item">Veggies</span><span class="dot">&bull;</span>
+        <span class="item">Popcorn</span><span class="dot">&bull;</span>
+        <span class="item">Eggs</span><span class="dot">&bull;</span>
+        <span class="item">Basically everything</span><span class="dot">&bull;</span>
+        <span class="item">Wings</span><span class="dot">&bull;</span>
+        <span class="item">Ribs</span><span class="dot">&bull;</span>
+        <span class="item">Shrimp</span><span class="dot">&bull;</span>
+        <span class="item">Chicken thighs</span><span class="dot">&bull;</span>
+        <span class="item">Steak</span><span class="dot">&bull;</span>
+        <span class="item">Potatoes</span><span class="dot">&bull;</span>
+        <span class="item">Veggies</span><span class="dot">&bull;</span>
+        <span class="item">Popcorn</span><span class="dot">&bull;</span>
+        <span class="item">Eggs</span><span class="dot">&bull;</span>
+        <span class="item">Basically everything</span><span class="dot">&bull;</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="recipes-section wrap">
+  <div class="section-head">
+    <span class="tape alt">From the test kitchen</span>
+    <h2>Recipes made for this rub</h2>
+  </div>
+  <div class="recipes-grid">
+    <div class="recipe-card">
+      <div class="recipe-img"><span class="tape" style="font-size:13px; padding:8px 16px;">Grilling</span></div>
+      <div class="recipe-body">
+        <h3>Dry-rub grilled wings</h3>
+        <p>High heat, one coat of rub, and the patience to not check them every 90 seconds.</p>
+        <a href="the-rub-recipe-template.html" class="recipe-link">Get the recipe</a>
+      </div>
+    </div>
+    <div class="recipe-card">
+      <div class="recipe-img"><span class="tape" style="font-size:13px; padding:8px 16px;">Low and slow</span></div>
+      <div class="recipe-body">
+        <h3>Smoked rib rack</h3>
+        <p>Rub it the night before. Let the fridge do some of the work for you.</p>
+        <a href="#" class="recipe-link">Get the recipe</a>
+      </div>
+    </div>
+    <div class="recipe-card">
+      <div class="recipe-img"><span class="tape" style="font-size:13px; padding:8px 16px;">Weeknight</span></div>
+      <div class="recipe-body">
+        <h3>Sheet-pan potatoes</h3>
+        <p>Olive oil, a heavy hand with the rub, 425 degrees. Done before you finish a beer.</p>
+        <a href="#" class="recipe-link">Get the recipe</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-logo">The rub</div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Shop</h4>
+          <a href="the-rub-homepage.html#shop">Original blend</a>
+          <a href="the-rub-homepage.html#shop">Refill bags</a>
+          <a href="the-rub-homepage.html#shop">Bundles</a>
+        </div>
+        <div class="foot-col">
+          <h4>Learn</h4>
+          <a href="the-rub-homepage.html#recipe-collection">Recipes</a>
+          <a href="the-rub-homepage.html#story">Our story</a>
+        </div>
+        <div class="foot-col">
+          <h4>Get in touch</h4>
+          <a href="#">hello@therub.com</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="sign">Taste it. Believe it.</span>
+      <span class="copy">&copy; 2026 The rub. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

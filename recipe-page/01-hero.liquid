@@ -1,0 +1,44 @@
+{% comment %}
+  THE RUB — RECIPE HERO (DYNAMIC)
+  Pulls real data from the article: title, image, first tag as category,
+  and excerpt as the subhead. Works automatically for every future recipe —
+  nothing here needs to change per article.
+{% endcomment %}
+<div class="rub-recipe">
+<div class="crumb"><a href="/blogs/recipes">Recipes</a>{% if article.tags.size > 0 %} / {{ article.tags.first }}{% endif %}</div>
+
+<section class="recipe-hero">
+  <div class="recipe-photo">
+    {% if article.tags.size > 0 %}<span class="tape">{{ article.tags.first }}</span>{% endif %}
+    {% if article.image %}
+      <img src="{{ article.image | image_url: width: 900 }}" alt="{{ article.image.alt | default: article.title | escape }}">
+    {% endif %}
+  </div>
+  <div>
+    <h1>{{ article.title }}</h1>
+    {% if article.excerpt != blank %}
+      <p class="sub">{{ article.excerpt }}</p>
+    {% endif %}
+    {% if article.metafields.custom.prep_time != blank or article.metafields.custom.cook_time != blank or article.metafields.custom.servings != blank or article.metafields.custom.difficulty != blank %}
+    <div class="meta-row">
+      {% if article.metafields.custom.prep_time != blank %}
+      <div class="meta-item"><span class="num">{{ article.metafields.custom.prep_time.value }}</span><span class="lbl">Prep</span></div>
+      {% endif %}
+      {% if article.metafields.custom.cook_time != blank %}
+      <div class="meta-item"><span class="num">{{ article.metafields.custom.cook_time.value }}</span><span class="lbl">Cook</span></div>
+      {% endif %}
+      {% if article.metafields.custom.servings != blank %}
+      <div class="meta-item"><span class="num">{{ article.metafields.custom.servings.value }}</span><span class="lbl">Servings</span></div>
+      {% endif %}
+      {% if article.metafields.custom.difficulty != blank %}
+      <div class="meta-item"><span class="num">{{ article.metafields.custom.difficulty.value }}</span><span class="lbl">Difficulty</span></div>
+      {% endif %}
+    </div>
+    {% endif %}
+    <div class="hero-cta-row">
+      <a href="/products/the-rub" class="btn">Shop the rub &rarr;</a>
+      <button class="btn ghost" onclick="window.print()">Print recipe</button>
+    </div>
+  </div>
+</section>
+</div>

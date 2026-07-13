@@ -1,0 +1,79 @@
+{% comment %}
+  THE RUB — RECIPE CONTENT (PER-ARTICLE, DRIVEN BY METAFIELDS)
+  Renders the full designed layout (story, sticky ingredients panel, numbered
+  steps, tape tip box) from 7 article metafields instead of the content box —
+  this is what makes it immune to the editor mangling custom HTML.
+
+  Expected metafields (namespace "custom" — verify against your actual keys):
+    custom.story                 (multi-line text)
+    custom.ingredients_main       (list of single line text)
+    custom.ingredients_rub        (list of single line text)
+    custom.rub_callout            (multi-line text)
+    custom.step_titles            (list of single line text)
+    custom.step_descriptions      (list of single line text)
+    custom.pro_tip                (multi-line text)
+{% endcomment %}
+<div class="rub-recipe">
+
+{% if article.metafields.custom.story != blank %}
+<div class="story-block wrap">
+  <span class="tape alt">The story</span>
+  <p class="story-text">{{ article.metafields.custom.story.value | newline_to_br }}</p>
+</div>
+{% endif %}
+
+<div class="wrap">
+  <div class="cook-grid">
+    <div class="ing-panel">
+      <h2 class="panel-label">Ingredients</h2>
+      {% if article.metafields.custom.ingredients_main.value.size > 0 %}
+      <h3>Main ingredients</h3>
+      <ul>
+        {% for item in article.metafields.custom.ingredients_main.value %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if article.metafields.custom.ingredients_rub.value.size > 0 %}
+      <h3 class="second">For the rub</h3>
+      <ul>
+        {% for item in article.metafields.custom.ingredients_rub.value %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if article.metafields.custom.rub_callout != blank %}
+      <div class="rub-callout">
+        <p>{{ article.metafields.custom.rub_callout.value }}</p>
+        <a href="/products/the-rub">Shop the rub &rarr;</a>
+      </div>
+      {% endif %}
+    </div>
+
+    <div>
+      {% if article.metafields.custom.step_titles.value.size > 0 %}
+      <h2 class="panel-label">Directions</h2>
+      <div class="steps">
+        {% for title in article.metafields.custom.step_titles.value %}
+          {% assign idx = forloop.index0 %}
+          <div class="step">
+            <div class="stepnum"></div>
+            <div>
+              <h4>{{ title }}</h4>
+              <p>{{ article.metafields.custom.step_descriptions.value[idx] }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if article.metafields.custom.pro_tip != blank %}
+      <div class="tip-box">
+        <span class="tape dark">Pro tip</span>
+        <p>{{ article.metafields.custom.pro_tip.value }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,78 @@
+{% comment %}
+  THE RUB — QUOTE CAROUSEL
+  Includes its own <script> at the bottom — keep it in this section,
+  it references element IDs defined just above it.
+{% endcomment %}
+<section class="quote-section">
+  <button class="quote-arrow left" id="quotePrev" aria-label="Previous quote">&lsaquo;</button>
+  <button class="quote-arrow right" id="quoteNext" aria-label="Next quote">&rsaquo;</button>
+  <div class="quote-inner">
+    <div class="quote-mark">&ldquo;</div>
+    <div class="quote-slide" id="quoteSlide">
+      <p class="quote-text" id="quoteText">You're gonna want a hair tie to eat these wings.</p>
+      <div class="quote-attr-row">
+        <span class="quote-tag" id="quoteTag">Verified rub enjoyer</span>
+        <span class="quote-attr" id="quoteAttr">Katie Schad</span>
+      </div>
+    </div>
+    <div class="quote-dots" id="quoteDots"></div>
+  </div>
+</section>
+<script>
+  var quotes = [
+    { text: "You're gonna want a hair tie to eat these wings.", tag: "Verified rub enjoyer", name: "Katie Schad" },
+    { text: "My smoker has never smelled this good. Neither have I.", tag: "Backyard pitmaster", name: "Marcus T." },
+    { text: "I put it on eggs. I put it on everything. Send help.", tag: "Repeat offender", name: "Dana R." },
+    { text: "Ripped a hole in my favorite towel wiping my hands off. Worth it.", tag: "No regrets", name: "Jordan P." }
+  ];
+  var qIndex = 0;
+  var animating = false;
+  var qSlide = document.getElementById('quoteSlide');
+  var qText = document.getElementById('quoteText');
+  var qTag = document.getElementById('quoteTag');
+  var qAttr = document.getElementById('quoteAttr');
+  var qDots = document.getElementById('quoteDots');
+
+  quotes.forEach(function(_, i){
+    var dot = document.createElement('span');
+    if(i === 0) dot.className = 'active';
+    dot.addEventListener('click', function(){
+      if(i === qIndex) return;
+      goToQuote(i, i > qIndex ? 1 : -1);
+    });
+    qDots.appendChild(dot);
+  });
+
+  function applyContent(i){
+    var q = quotes[i];
+    qText.textContent = q.text;
+    qTag.textContent = q.tag;
+    qAttr.textContent = q.name;
+    Array.prototype.forEach.call(qDots.children, function(dot, idx){
+      dot.className = idx === i ? 'active' : '';
+    });
+  }
+
+  function goToQuote(newIndex, dir){
+    if(animating) return;
+    animating = true;
+    newIndex = (newIndex + quotes.length) % quotes.length;
+    qSlide.style.transform = 'translateX(' + (dir > 0 ? '-28px' : '28px') + ')';
+    qSlide.style.opacity = '0';
+    setTimeout(function(){
+      qIndex = newIndex;
+      applyContent(qIndex);
+      qSlide.style.transition = 'none';
+      qSlide.style.transform = 'translateX(' + (dir > 0 ? '28px' : '-28px') + ')';
+      qSlide.style.opacity = '0';
+      void qSlide.offsetWidth;
+      qSlide.style.transition = 'transform 0.35s ease, opacity 0.35s ease';
+      qSlide.style.transform = 'translateX(0)';
+      qSlide.style.opacity = '1';
+      setTimeout(function(){ animating = false; }, 360);
+    }, 350);
+  }
+
+  document.getElementById('quotePrev').addEventListener('click', function(){ goToQuote(qIndex - 1, -1); });
+  document.getElementById('quoteNext').addEventListener('click', function(){ goToQuote(qIndex + 1, 1); });
+</script>

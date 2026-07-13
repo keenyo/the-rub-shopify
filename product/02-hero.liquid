@@ -1,0 +1,137 @@
+{% comment %}
+  This section must be added to the PRODUCT template (not a generic Page) —
+  it needs Shopify's `product` object, which only exists there. Once added,
+  it works for whichever product that template is assigned to.
+{% endcomment %}
+{% comment %}
+  THE RUB PRODUCT PAGE — BREADCRUMB + HERO (DYNAMIC)
+  Must go on the PRODUCT template — uses Shopify's `product` object for
+  real price, variants, images, and a working Add to cart form.
+{% endcomment %}
+<div class="crumb"><a href="/collections/all">Shop</a> / {{ product.type | default: "Original blend" }}</div>
+{% assign current_variant = product.selected_or_first_available_variant %}
+<section class="product-hero">
+  <div>
+    <div class="gallery-main">
+      <span class="tape">Bestseller</span>
+      {% if product.featured_image %}
+        <img id="MainProductImage" src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.featured_image.alt | escape }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+      {% else %}
+        <div class="pouch-logo">{{ product.title | default: "The rub" }}</div>
+        <div class="pouch-sub">{{ current_variant.title }}</div>
+      {% endif %}
+    </div>
+    {% if product.images.size > 1 %}
+    <div class="gallery-thumbs">
+      {% for image in product.images limit: 4 %}
+        <div class="thumb{% if forloop.first %} active{% endif %}" style="background-image:url('{{ image | image_url: width: 200 }}'); background-size:cover;" data-full="{{ image | image_url: width: 900 }}"></div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div>
+    <span class="kicker mono">{{ product.type | default: "Original blend" }}</span>
+    <h1>{{ product.title }}</h1>
+    <div class="stars">&starf;&starf;&starf;&starf;&starf; <span>312 reviews</span></div>
+    <p class="desc">{{ product.description | strip_html | truncatewords: 30 }}</p>
+    <ul class="feat-list">
+      <li>No MSG, no anti-caking agents</li>
+      <li>Small-batch, hand mixed</li>
+      <li>Goes on everything, we've checked</li>
+    </ul>
+
+    {% form 'product', product, id: 'ProductForm' %}
+      <input type="hidden" name="id" id="ProductVariantId" value="{{ current_variant.id }}">
+
+      <div class="price-row">
+        <span class="price" id="ProductPrice">{{ current_variant.price | money }}</span>
+        {% if current_variant.compare_at_price > current_variant.price %}
+          <span class="was" id="ProductCompareAt">{{ current_variant.compare_at_price | money }}</span>
+        {% else %}
+          <span class="was" id="ProductCompareAt" style="display:none;"></span>
+        {% endif %}
+      </div>
+
+      {% if product.variants.size > 1 %}
+      <span class="field-label">Size</span>
+      <div class="sizes">
+        {% for variant in product.variants %}
+          <span class="size-pill{% if variant.id == current_variant.id %} active{% endif %}"
+                data-variant-id="{{ variant.id }}"
+                data-price="{{ variant.price }}"
+                data-compare="{{ variant.compare_at_price }}"
+                data-available="{{ variant.available }}">{{ variant.title }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <span class="field-label">Quantity</span>
+      <div class="buy-row">
+        <div class="qty">
+          <button type="button" aria-label="Decrease quantity">&minus;</button>
+          <span id="QtyDisplay">1</span>
+          <input type="hidden" name="quantity" id="ProductQuantity" value="1">
+          <button type="button" aria-label="Increase quantity">+</button>
+        </div>
+        <button type="submit" class="btn" id="AddToCartBtn"{% unless current_variant.available %} disabled{% endunless %}>
+          {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
+        </button>
+      </div>
+    {% endform %}
+    <p class="reassure">Ships in 1&ndash;2 business days &middot; free shipping over $35</p>
+  </div>
+</section>
+<script>
+(function(){
+  function formatMoney(cents){
+    return '$' + (cents / 100).toFixed(2).replace(/\.00$/, '');
+  }
+  var variantInput = document.getElementById('ProductVariantId');
+  var qtyInput = document.getElementById('ProductQuantity');
+  var qtyDisplay = document.getElementById('QtyDisplay');
+  var priceEl = document.getElementById('ProductPrice');
+  var wasEl = document.getElementById('ProductCompareAt');
+  var addBtn = document.getElementById('AddToCartBtn');
+  var qty = 1;
+
+  document.querySelectorAll('.size-pill').forEach(function(pill){
+    pill.addEventListener('click', function(){
+      document.querySelectorAll('.size-pill').forEach(function(p){ p.classList.remove('active'); });
+      pill.classList.add('active');
+      variantInput.value = pill.getAttribute('data-variant-id');
+
+      var price = parseInt(pill.getAttribute('data-price'), 10);
+      var compare = parseInt(pill.getAttribute('data-compare') || '0', 10);
+      priceEl.textContent = formatMoney(price);
+      if(compare > price){
+        wasEl.textContent = formatMoney(compare);
+        wasEl.style.display = '';
+      } else {
+        wasEl.style.display = 'none';
+      }
+
+      var available = pill.getAttribute('data-available') === 'true';
+      addBtn.disabled = !available;
+      addBtn.textContent = available ? 'Add to cart' : 'Sold out';
+    });
+  });
+
+  document.querySelectorAll('.qty button').forEach(function(btn, i){
+    btn.addEventListener('click', function(){
+      qty = i === 0 ? Math.max(1, qty - 1) : qty + 1;
+      qtyDisplay.textContent = qty;
+      qtyInput.value = qty;
+    });
+  });
+
+  document.querySelectorAll('.thumb[data-full]').forEach(function(t){
+    t.addEventListener('click', function(){
+      document.querySelectorAll('.thumb').forEach(function(x){ x.classList.remove('active'); });
+      t.classList.add('active');
+      var mainImg = document.getElementById('MainProductImage');
+      if(mainImg) mainImg.src = t.getAttribute('data-full');
+    });
+  });
+})();
+</script>

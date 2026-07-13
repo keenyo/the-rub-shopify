@@ -1,0 +1,32 @@
+{% comment %}
+  THE RUB — RELATED RECIPES (DYNAMIC)
+  Auto-loops every other article in the Recipes blog. Publishing a new
+  recipe automatically makes it show up here — no editing required.
+{% endcomment %}
+<div class="rub-recipe">
+<section class="related wrap">
+  <div class="section-head">
+    <span class="tape alt">More from the test kitchen</span>
+    <h2>Keep going</h2>
+  </div>
+  <div class="recipes-grid">
+    {% assign shown = 0 %}
+    {% for a in blogs.recipes.articles %}
+      {% if a.id != article.id and shown < 3 %}
+        {% assign shown = shown | plus: 1 %}
+        <div class="recipe-card">
+          <div class="recipe-img">
+            {% if a.tags.size > 0 %}<span class="tape" style="font-size:13px; padding:8px 16px;">{{ a.tags.first }}</span>{% endif %}
+            {% if a.image %}<img src="{{ a.image | image_url: width: 500 }}" alt="{{ a.title | escape }}">{% endif %}
+          </div>
+          <div class="recipe-body">
+            <h3>{{ a.title }}</h3>
+            {% if a.excerpt != blank %}<p>{{ a.excerpt | truncatewords: 18 }}</p>{% endif %}
+            <a href="{{ a.url }}" class="recipe-link">Get the recipe</a>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+</div>

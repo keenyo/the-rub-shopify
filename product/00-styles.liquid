@@ -1,0 +1,179 @@
+{% comment %}
+  THE RUB PRODUCT PAGE — GLOBAL STYLES
+  Add as the FIRST section on the Product template. No visible content.
+{% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kraft-bg:#EDE1C8;
+    --kraft-card:#F7F1E1;
+    --kraft-deep:#B98D53;
+    --tape:#4577A8;
+    --tape-dark:#2A4D73;
+    --steel:#9A9C97;
+    --steel-dark:#2E2F2A;
+    --ink:#201D16;
+    --chili:#A6432B;
+    --acid:#DEE47C;
+    --acid-ink:#3A3D1E;
+    --paper-line: rgba(32,29,22,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--kraft-bg);
+    color:var(--ink);
+    font-family:'Syne', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1100px; margin:0 auto; padding:0 32px;}
+  a{color:inherit;}
+
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-weight:700;
+    margin:0;
+  }
+  .mono{font-family:'Space Mono', monospace; text-transform:uppercase; letter-spacing:0.06em;}
+
+  .tape{
+    position:relative;
+    display:inline-block;
+    background:var(--tape);
+    color:#152233;
+    font-family:'Permanent Marker', cursive;
+    text-transform:none;
+    font-size:16px;
+    line-height:1.4;
+    padding:11px 22px;
+    transform:rotate(-2deg);
+    clip-path:polygon(0% 0%, 100% 0%, 98.4% 25.0%, 98.7% 50.0%, 99.8% 75.0%, 100% 100%, 0% 100%, 1.4% 75.0%, 1.5% 50.0%, 1.8% 25.0%);
+    box-shadow:0 4px 10px rgba(0,0,0,0.22);
+  }
+  .tape.alt{ background:var(--kraft-deep); color:#2b1f0f; transform:rotate(1.6deg); }
+  .tape.dark{ background:var(--ink); color:#EDE1C8; transform:rotate(-1deg); }
+
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 32px;
+    max-width:1100px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:22px;
+    text-transform:uppercase; letter-spacing:0.02em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo .dot{width:8px; height:8px; border-radius:50%; background:var(--chili); display:inline-block;}
+  .navlinks{display:flex; gap:34px; font-family:'Space Mono',monospace; font-size:13px; text-transform:uppercase; letter-spacing:0.05em;}
+  .navlinks a{text-decoration:none; border-bottom:1px solid transparent;}
+  .navlinks a:hover{border-color:var(--ink);}
+  .crumb{font-family:'Space Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:var(--tape-dark); padding:18px 32px 0; max-width:1100px; margin:0 auto;}
+  .crumb a{text-decoration:none; border-bottom:1px solid var(--paper-line);}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    font-family:'Space Mono', monospace; text-transform:uppercase; letter-spacing:0.05em;
+    font-size:14px; font-weight:700;
+    background:var(--ink); color:var(--kraft-bg);
+    padding:16px 26px; text-decoration:none; border:none; cursor:pointer;
+  }
+  .btn:hover{background:var(--tape-dark);}
+  .btn.ghost{background:transparent; color:var(--ink); border:1.5px solid var(--ink);}
+  .btn.block{width:100%;}
+
+  /* ---- product hero ---- */
+  .product-hero{
+    display:grid; grid-template-columns:0.95fr 1.05fr; gap:60px;
+    padding:26px 32px 80px; max-width:1100px; margin:0 auto;
+  }
+  .gallery-main{
+    aspect-ratio:3/4; background:linear-gradient(180deg,#D9C69C,#C9AF7D);
+    border:1px solid rgba(0,0,0,0.15);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;
+    position:relative;
+  }
+  .gallery-main .pouch-logo{font-family:'Space Grotesk'; font-weight:700; text-transform:uppercase; font-size:34px;}
+  .gallery-main .pouch-sub{font-family:'Space Mono'; font-size:13px; text-transform:uppercase; letter-spacing:0.08em; color:#5b4526;}
+  .gallery-main .tape{position:absolute; top:18px; right:18px; font-size:13px; padding:8px 16px;}
+  .gallery-thumbs{display:flex; gap:14px; margin-top:16px;}
+  .thumb{
+    width:70px; height:70px; background:var(--steel); border:2px solid transparent; cursor:pointer;
+  }
+  .thumb.active{border-color:var(--ink);}
+
+  .kicker{font-family:'Space Mono'; font-size:13px; color:var(--tape-dark); margin-bottom:10px; display:block;}
+  .product-hero h1{font-size:38px; margin:0 0 14px; line-height:1.1;}
+  .stars{color:var(--chili); font-size:15px; letter-spacing:2px; margin-bottom:14px;}
+  .stars span{font-family:'Space Mono'; color:var(--tape-dark); letter-spacing:0; margin-left:8px; font-size:13px;}
+  .product-hero > div > p.desc{font-size:16px; line-height:1.7; color:#3a3324; max-width:52ch; margin:0 0 26px;}
+  .feat-list{list-style:none; padding:0; margin:0 0 30px; font-family:'Space Mono'; font-size:13px; text-transform:uppercase; display:flex; flex-direction:column; gap:10px;}
+  .feat-list li:before{content:"— "; color:var(--chili);}
+  .price-row{display:flex; align-items:baseline; gap:14px; margin:0 0 22px;}
+  .price{font-family:'Space Grotesk'; font-weight:700; font-size:32px;}
+  .was{font-family:'Space Mono'; font-size:14px; color:#8a7c5e; text-decoration:line-through;}
+  .field-label{font-family:'Space Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:var(--tape-dark); margin-bottom:8px; display:block;}
+  .sizes{display:flex; gap:10px; margin-bottom:22px;}
+  .size-pill{
+    font-family:'Space Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.04em;
+    border:1.5px solid var(--ink); padding:9px 16px; cursor:pointer; background:transparent;
+  }
+  .size-pill.active{background:var(--ink); color:var(--kraft-bg);}
+  .buy-row{display:flex; gap:14px; margin-bottom:14px;}
+  .qty{display:flex; align-items:center; border:1.5px solid var(--ink);}
+  .qty button{background:none; border:none; width:40px; height:52px; font-size:18px; cursor:pointer; font-family:'Space Mono';}
+  .qty span{width:34px; text-align:center; font-family:'Space Mono'; font-size:14px;}
+  .buy-row .btn{flex:1;}
+  .reassure{font-family:'Space Mono'; font-size:11px; text-transform:uppercase; letter-spacing:0.04em; color:var(--tape-dark); margin-top:4px;}
+
+  /* ---- ingredients ---- */
+  .ingredients-section{background:var(--kraft-card); border-top:1px solid var(--paper-line); border-bottom:1px solid var(--paper-line); padding:70px 0;}
+  .ing-grid2{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start;}
+  .ing-grid2 .panel-label{font-size:22px; margin:0 0 20px; padding-bottom:14px; border-bottom:2px solid var(--ink);}
+  .ing-mono-list{font-family:'Space Mono', monospace; text-transform:uppercase; font-size:16px; line-height:2.1; letter-spacing:0.02em; max-width:36ch;}
+  .ing-mono-list b{color:var(--chili);}
+  .ing-note{font-size:16px; line-height:1.75; color:#3a3324; max-width:44ch;}
+
+  /* ---- perfect for band ---- */
+  .perfect-for{padding:70px 0 0;}
+  .perfect-for-stage{position:relative;}
+  .marquee-outer{overflow:hidden; background:var(--steel-dark); padding:22px 0; width:100%;}
+  .marquee-track{display:flex; align-items:center; gap:26px; width:max-content; animation:marquee 24s linear infinite; white-space:nowrap;}
+  .marquee-outer:hover .marquee-track{animation-play-state:paused;}
+  .marquee-track span.item{font-family:'Space Grotesk'; font-weight:700; text-transform:uppercase; font-size:22px; letter-spacing:0.01em; color:var(--kraft-bg);}
+  .marquee-track span.dot{color:var(--chili); font-size:14px;}
+  .perfect-tape{position:absolute; top:-14px; left:40px; font-size:14px; padding:9px 18px; transform:rotate(-3deg); z-index:5;}
+  @keyframes marquee{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  /* ---- recipes ---- */
+  .recipes-section{padding:90px 0;}
+  .section-head{margin-bottom:34px;}
+  .section-head h2{font-size:30px; margin:14px 0 0;}
+  .recipes-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .recipe-card{background:var(--kraft-card); border:1px solid var(--paper-line);}
+  .recipe-img{aspect-ratio:4/3; background:var(--steel); position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:14px;}
+  .recipe-body{padding:20px 18px 26px;}
+  .recipe-body h3{font-size:18px; margin:0 0 8px;}
+  .recipe-body p{font-size:14px; color:#5c5340; margin:0 0 14px; line-height:1.55;}
+  .recipe-link{font-family:'Space Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.04em; text-decoration:none; border-bottom:1px solid var(--ink);}
+
+  /* ---- footer ---- */
+  footer{background:var(--steel-dark); color:var(--kraft-bg); padding:56px 0 34px;}
+  .foot-top{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:40px; flex-wrap:wrap; gap:30px;}
+  .foot-logo{font-family:'Space Grotesk'; font-weight:700; font-size:24px; text-transform:uppercase;}
+  .foot-links{display:flex; gap:60px; flex-wrap:wrap;}
+  .foot-col h4{font-family:'Space Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:#B7B6AE; margin:0 0 14px;}
+  .foot-col a{display:block; font-size:14px; text-decoration:none; color:var(--kraft-bg); margin-bottom:8px; opacity:0.9;}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,0.15); padding-top:22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
+  .foot-bottom .sign{font-family:'Permanent Marker'; font-size:20px; color:var(--kraft-bg);}
+  .foot-bottom .copy{font-family:'Space Mono'; font-size:11px; color:#8f8e86; text-transform:uppercase;}
+
+  @media (max-width:860px){
+    .product-hero{grid-template-columns:1fr;}
+    .ing-grid2{grid-template-columns:1fr;}
+    .recipes-grid{grid-template-columns:1fr;}
+    .foot-top{flex-direction:column;}
+  }
+</style>
